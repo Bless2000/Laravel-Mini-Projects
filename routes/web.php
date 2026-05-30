@@ -9,7 +9,7 @@ use App\Http\Controllers\ExpenseController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('hub');
 });
 
 Route::get('/hello', [WelcomeController::class, 'hello']);

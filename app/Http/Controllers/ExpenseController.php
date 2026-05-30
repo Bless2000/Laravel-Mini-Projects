@@ -9,7 +9,7 @@ class ExpenseController extends Controller
 {
 
       public function createExpenses() {
-          return view('expenses.create');
+          return view('ExpenseTracker.create');
       }
 
       public function storeExpenses(Request $request) {
@@ -25,7 +25,7 @@ class ExpenseController extends Controller
             $expense->type = $validated['type'];
             $expense->save();
 
-            return redirect()->route('expenses.index')->with('Expense successfully created');
+            return redirect()->route('ExpenseTracker.index')->with('Expense successfully created');
       }
 
         public function index() {
@@ -41,6 +41,6 @@ class ExpenseController extends Controller
             $expense = Expense::find($expenseid);
             $expense->delete();
 
-            return redirect()->route('expenses.index')->with('Expense remove successfully');
+            return redirect()->route('ExpenseTracker.index')->with('Expense remove successfully');
         }
 }
