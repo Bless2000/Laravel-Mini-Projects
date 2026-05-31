@@ -33,6 +33,10 @@ WORKDIR /var/www/html
 # Copy project files
 COPY . .
 
+# Create the SQLite database file and set permissions
+RUN mkdir -p database && touch database/database.sqlite && \
+    chown -R www-data:www-data /var/www/html/database
+
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
@@ -46,6 +50,9 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.
 
 # Set permissions for Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Run migrations (using force because we are in "production" mode)
+RUN php artisan migrate --force
 
 # Expose port 80
 EXPOSE 80
