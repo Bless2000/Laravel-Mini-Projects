@@ -14,14 +14,47 @@
     <div class="max-w-5xl mx-auto px-6 py-16">
         
         <!-- Header -->
-        <header class="mb-12">
-            <div class="flex items-center gap-3 mb-4">
-                <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-bold uppercase tracking-widest rounded-full">Practice Environment</span>
+        <header class="mb-12 flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-bold uppercase tracking-widest rounded-full">Practice Environment</span>
+                </div>
+                <h1 class="text-4xl font-extrabold tracking-tight mb-2 text-slate-900">
+                    Practice Project Hub
+                </h1>
+                <p class="text-slate-500 text-lg">Quick access to all my internal learning modules and mini-projects.</p>
             </div>
-            <h1 class="text-4xl font-extrabold tracking-tight mb-2 text-slate-900">
-                Practice Project Hub
-            </h1>
-            <p class="text-slate-500 text-lg">Quick access to all my internal learning modules and mini-projects.</p>
+
+            <div class="flex flex-wrap gap-3">
+                @guest
+                    <a href="{{ route('auth.login') }}" class="px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 active:scale-95">
+                        Login
+                    </a>
+                    <a href="{{ route('auth.register') }}" class="px-6 py-3 bg-white text-slate-700 border border-slate-200 rounded-2xl font-bold hover:bg-slate-50 transition-all active:scale-95">
+                        Register
+                    </a>
+                @endguest
+
+                @auth
+                    <div class="flex items-center gap-4 bg-white p-2 pr-4 rounded-2xl border border-slate-200 shadow-sm">
+                        <div class="w-10 h-10 bg-indigo-100 text-indigo-700 rounded-xl flex items-center justify-center font-bold">
+                            {{ substr(Auth::user()->fullName, 0, 1) }}
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-xs text-slate-400 font-bold uppercase tracking-wider">Welcome back</span>
+                            <span class="text-slate-900 font-bold leading-tight">{{ Auth::user()->fullName }}</span>
+                        </div>
+                        <form action="/logout" method="POST" class="ml-2">
+                            @csrf
+                            <button type="submit" class="p-2 text-slate-400 hover:text-rose-600 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                @endauth
+            </div>
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -127,6 +160,62 @@
                     </svg>
                 </div>
             </a>
+
+            @guest
+            <!-- Login Module -->
+            <a href="{{ route('auth.login') }}" class="group bg-slate-900 p-8 rounded-3xl shadow-sm border border-slate-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div class="p-4 bg-slate-800 rounded-2xl text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition-colors w-fit mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2 text-white">Sign In</h3>
+                <p class="text-slate-400 text-sm leading-relaxed mb-6">Log in to your account to sync your data across modules.</p>
+                <div class="flex items-center text-indigo-400 font-semibold text-sm">
+                    Access Account
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Register Module -->
+            <a href="{{ route('auth.register') }}" class="group bg-indigo-600 p-8 rounded-3xl shadow-sm border border-indigo-500 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div class="p-4 bg-indigo-500 rounded-2xl text-white group-hover:bg-white group-hover:text-indigo-600 transition-colors w-fit mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2 text-white">Create Account</h3>
+                <p class="text-indigo-100 text-sm leading-relaxed mb-6">New here? Register a new account in seconds.</p>
+                <div class="flex items-center text-white font-semibold text-sm">
+                    Join Now
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                </div>
+            </a>
+            @endguest
+
+            @auth
+            <!-- Logout Module -->
+            <form action="/logout" method="POST" id="grid-logout-form" class="hidden">@csrf</form>
+            <a href="#" onclick="event.preventDefault(); document.getElementById('grid-logout-form').submit();" class="group bg-rose-50 p-8 rounded-3xl shadow-sm border border-rose-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <div class="p-4 bg-rose-100 rounded-2xl text-rose-600 group-hover:bg-rose-600 group-hover:text-white transition-colors w-fit mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2 text-rose-900">Sign Out</h3>
+                <p class="text-rose-600/70 text-sm leading-relaxed mb-6">Finished your session? Logout securely here.</p>
+                <div class="flex items-center text-rose-600 font-semibold text-sm">
+                    End Session
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                </div>
+            </a>
+            @endauth
 
         </div>
 

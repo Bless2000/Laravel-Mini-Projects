@@ -6,6 +6,8 @@ use App\Http\Controllers\crudController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\auth\registerController;
+use App\Http\Controllers\auth\loginController;
 
 
 Route::get('/', function () {
@@ -21,7 +23,7 @@ Route::get('/products', [WelcomeController::class, 'products']);
 // Route::get('/user/{name}', [WelcomeController::class, 'user']);
 
 
-Route::get('/users', [WelcomeController::class, 'users']);
+Route::get('/users', [WelcomeController::class, 'users'])->name('users');
 Route::get('/users/add/{name}', [WelcomeController::class, 'addUser']);
 Route::get('/users/delete/{name}', [WelcomeController::class, 'deleteUser']);
 
@@ -59,3 +61,11 @@ Route::post('/expenses', [ExpenseController::class, 'storeExpenses'])->name('exp
 Route::get('/expenses/create', [ExpenseController::class, 'createExpenses'])->name('expenses.create');
 Route::delete('/expenses/{expenseid}/remove', [ExpenseController::class, 'removeExpense'])->name('expenses.remove');
 
+
+Route::get('register', [registerController::class, 'show'])->name('auth.register');
+Route::post('register', [registerController::class, 'store'])->name('auth.create');
+
+
+Route::get('login', [loginController::class, 'show'])->name('auth.login');
+Route::post('login', [loginController::class, 'store']);
+Route::post('logout', [loginController::class, 'logout']);

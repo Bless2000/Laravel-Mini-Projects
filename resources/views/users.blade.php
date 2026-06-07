@@ -5,6 +5,11 @@
     <title></title>
   </head>
   <body>
+          @if(session('success'))
+              <div style="background-color: #d4edda; color: #155724; padding: 10px; border: 1px solid #c3e6cb; margin-bottom: 20px;">
+                  {{ session('success') }}
+              </div>
+          @endif
           <h1>Users</h1>
 
           @foreach($users as $user)

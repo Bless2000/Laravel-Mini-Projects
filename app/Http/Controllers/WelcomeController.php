@@ -22,11 +22,11 @@ class WelcomeController extends Controller
 
       $total = count($students);
       $caps = [];
-     foreach ($students as $student) {
-         $caps[] = strtoupper($student);
+      foreach ($students as $student) {
+          $caps[] = strtoupper($student);
+      }
 
-    return view('students', compact('students', 'caps', 'total'));
-    }
+      return view('students', compact('students', 'caps', 'total'));
   }
 
   public function products()
